@@ -1,0 +1,19 @@
+name: Build LaTeX document
+
+on: [push]
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: latex_typography_guide.tex
+      - name: Commit changes to posted list
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Github Actions"
+          git commit latex_typography_guide.pdf -m 'Uploaded the most recent ecent version' && git push
